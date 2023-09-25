@@ -28,6 +28,7 @@ public class Medico {
     private String email;
     private String telefono;
     private String documento;
+    private boolean activo;
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
     @Embedded
@@ -35,11 +36,26 @@ public class Medico {
     
     //Recive un DTO
     public Medico(DatosRegistroMedicio request) {
+        this.activo = true;
         this.nombre = request.nombre();
         this.email = request.email();
         this.telefono = request.telefono();
         this.documento = request.documento();
         this.especialidad = request.especialidad();
         this.direccion = new Direccion(request.direccion());
+    }
+
+    public void actualizarMedico(DatosActualizarMedico datosActualizarMedico){
+        if(datosActualizarMedico.nombre() != null)
+            this.nombre = datosActualizarMedico.nombre();
+        if(datosActualizarMedico.documento() != null)
+            this.documento = datosActualizarMedico.documento();
+        if(datosActualizarMedico.direccion() != null)
+            this.direccion = direccion.actualizarDireccion(datosActualizarMedico.direccion());
+
+    }
+
+    public void desactivarMedico() {
+        this.activo = false;
     }
 }
