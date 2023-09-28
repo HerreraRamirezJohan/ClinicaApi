@@ -1,9 +1,8 @@
-package med.voll.api.medico;
+package med.voll.api.domain.paciente;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,48 +13,46 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.Direccion.Direccion;
 
-@Table(name = "medicos")
-@Entity(name = "Medico")
+@Table(name = "pacientes")
+@Entity(name = "Paciente")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Medico {
+public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nombre;
     private String email;
     private String telefono;
-    private String documento;
+    @Column(name="documentoIdentidad")
+    private String documentoIdentidad;
     private boolean activo;
-    @Enumerated(EnumType.STRING)
-    private Especialidad especialidad;
     @Embedded
     private Direccion direccion;
     
     //Recive un DTO
-    public Medico(DatosRegistroMedicio request) {
+    public Paciente(DatosRegistroPaciente request) {
         this.activo = true;
         this.nombre = request.nombre();
         this.email = request.email();
         this.telefono = request.telefono();
-        this.documento = request.documento();
-        this.especialidad = request.especialidad();
+        this.documentoIdentidad = request.documentoIdentidad();
         this.direccion = new Direccion(request.direccion());
     }
 
-    public void actualizarMedico(DatosActualizarMedico datosActualizarMedico){
-        if(datosActualizarMedico.nombre() != null)
-            this.nombre = datosActualizarMedico.nombre();
-        if(datosActualizarMedico.documento() != null)
-            this.documento = datosActualizarMedico.documento();
-        if(datosActualizarMedico.direccion() != null)
-            this.direccion = direccion.actualizarDireccion(datosActualizarMedico.direccion());
+    public void actualizarPaciente(DatosActualizarPaciente datosActualizarPaciente){
+        if(datosActualizarPaciente.nombre() != null)
+            this.nombre = datosActualizarPaciente.nombre();
+        if(datosActualizarPaciente.documentoIdentidad() != null)
+            this.documentoIdentidad = datosActualizarPaciente.documentoIdentidad();
+        if(datosActualizarPaciente.direccion() != null)
+            this.direccion = direccion.actualizarDireccion(datosActualizarPaciente.direccion());
 
     }
 
-    public void desactivarMedico() {
+    public void desactivarPaciente() {
         this.activo = false;
     }
 }

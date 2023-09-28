@@ -1,0 +1,1 @@
+alter table pacientes RENAME column documentoIdentidad to documento_identidad;
