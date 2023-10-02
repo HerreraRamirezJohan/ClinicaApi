@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 
 @RestControllerAdvice
 public class tratadorDeErrores {
@@ -20,6 +21,17 @@ public class tratadorDeErrores {
         var errors = e.getFieldErrors().stream().map(DatosErrorValidacion::new).toList();
         return ResponseEntity.badRequest().body(errors);
     }
+    // lanzar las excepciones como mensajes 
+    @ExceptionHandler(ValidacionDeIntegridadConsulta.class)
+    public ResponseEntity errorHandlerValidacionesDeNegocio(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity errorHandlerValidacionesDeIntegridad(Exception e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
 
     // Crear DTO interno
     private record DatosErrorValidacion(String campo, String error) {

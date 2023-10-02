@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import med.voll.api.Direccion.Direccion;
 
 @Table(name = "pacientes")
@@ -18,6 +19,7 @@ import med.voll.api.Direccion.Direccion;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode(of = "id")
 public class Paciente {
     @Id

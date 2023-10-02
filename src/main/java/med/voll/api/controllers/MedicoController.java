@@ -1,4 +1,4 @@
-package med.voll.api.domain;
+package med.voll.api.controllers;
 
 import java.net.URI;
 
