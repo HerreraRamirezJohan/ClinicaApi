@@ -27,6 +27,7 @@ public class SecurityConfigurations {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)// tipo de sesion
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()// Permiso par poder usar login, sin embargo bloquea nuestro filtro de SecurityFilter
+                .requestMatchers("/swagger-ui.html", "/v3/api-docs/**","/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)// agregar nuestro filtro y verifica si hay una sesion iniciada en la API
